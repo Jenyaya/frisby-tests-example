@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+
+        "frisby": "*",
+        "jasmine-node": "*",
+        "chai" : "*"
+
+
+    }
+}
