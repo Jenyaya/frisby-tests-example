@@ -27,3 +27,8 @@ frisby.create('Test collaboration /api')
     .expectJSON(api_json.response2())
 
     .toss();
+
+frisby.create('Ensure test has foo and bar')
+    .get('http://httpbin.org/get?foo=bar&bar=baz')
+    .expectJSON('args', {'foo': 'bar'})
+    .toss()

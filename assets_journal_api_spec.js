@@ -30,6 +30,11 @@ frisby.create('GET /assets?query_params returns assets')
     .expectJSON(api_json.status_success)
     .expectJSON(api_json.assets_userid_response)
 
+    .afterJSON(function (res) {
+        expect(res.data.length).to.above(0);
+
+    })
+
     .toss();
 
 frisby.create('POST new asset returns success')
@@ -116,7 +121,6 @@ frisby.create('GET asset returns success')
             "versionTop": true, "version": 0, "parentId": null}})
 
 
-
     .toss();
 
 
@@ -139,9 +143,21 @@ frisby.create('PUT update asset returns success')
     .expectHeaderContains('content-type', 'application/json')
     .expectJSON(api_json.status_success)
 
-    .patch(url + '/536b32909d370f763b3251b5', {"data": {"_id": "536a36769f4867c02d6fbfbd", "name": "My Asset5_renamed"}})
+    /*.patch(url + '/536b32909d370f763b3251b5', {"data": {"_id": "536a36769f4867c02d6fbfbd", "name": "My Asset5_renamed"}})
+     .expectStatus(200)
+     .expectHeaderContains('content-type', 'application/json')
+     .expectBodyContains('Cannot PATCH /api/1.0/assets/536b32909d370f763b3251b5')*/
+
+    .toss();
+
+
+frisby.create('GET asset name returns success')
+
+    .get(url + '/536b32909d370f763b3251b5/name')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
     .expectJSON(api_json.status_success)
+
+    .expectJSON('data', {"name": "My Asset5kxpr"})
 
     .toss();
