@@ -126,19 +126,15 @@ frisby.create('GET asset returns success')
 
 frisby.create('PUT update asset returns success')
 
-    .get(url + '/536b32909d370f763b3251b5')
+    .get(url + '/536a3b387a1857243181e0c5')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
     .expectJSON(api_json.status_success)
 
-    .expectJSON({"status": "success", "code": 200, "message": "Success operation",
-        "data": {"_id": "536b32909d370f763b3251b5", "name": "My Asset5kxpr", "ownerId": "12345678", "accountId": "1q2w3e4r",
-            "__v": 0, "metadata": null, "attributes": [], "status": "init", "type": "pxf", "size": 0, "location": null, "availableZones": [],
-            "originZone": null, "updatedAt": "2014-05-08T07:30:24.410Z", "createdAt": "2014-05-08T07:30:24.410Z", "versionParentId": null,
-            "versionTop": true, "version": 0, "parentId": "null"}})
+    .expectJSON({"status": "success", "code": 200, "message": "Success operation", "data": {"_id": "536a3b387a1857243181e0c5", "name": "My Asset5vqawh", "accountId": "1q2w3e4r", "ownerId": "12345678", "__v": 0, "metadata": null, "attributes": [], "status": "init", "type": "pxf", "size": 0, "location": null, "availableZones": [], "originZone": null, "updatedAt": "2014-05-07T13:55:04.621Z", "createdAt": "2014-05-07T13:55:04.621Z", "versionParentId": null, "versionTop": true, "version": 0, "parentId": null}})
 
 
-    .put(url + '/536b32909d370f763b3251b5', {"data": {"_id": "536a36769f4867c02d6fbfbd", "name": "My Asset5_renamed"}})
+    .put(url + '/536a3b387a1857243181e0c5', {"data": { "name": "My Asset5_renamed"}})
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
     .expectJSON(api_json.status_success)
@@ -153,11 +149,24 @@ frisby.create('PUT update asset returns success')
 
 frisby.create('GET asset name returns success')
 
-    .get(url + '/536b32909d370f763b3251b5/name')
+    .get(url + '/536b365a5c91830641233700/name')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
     .expectJSON(api_json.status_success)
 
-    .expectJSON('data', {"name": "My Asset5kxpr"})
+    .expectJSON('data', {"name": "My Asset8Mayspmwd"})
+
+    .toss();
+
+var renamed = 'new_name' + Math.random().toString(36).replace(/[^a-z]/g, '').substr(2, 5)
+
+frisby.create('PUT renames asset name returns success')
+
+    .put(url + '/536b32909d370f763b3251b5/name', {name: renamed})
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSON(api_json.status_success)
+
+    .expectJSON('data', {"name": renamed})
 
     .toss();
