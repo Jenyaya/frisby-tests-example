@@ -7,7 +7,7 @@ var should = require('chai').should();
 
 var host = 'http://172.22.194.29', path = '/api/1.0/assets',
     url = host + path,
-    query_params = '?userId=' + assets_data.test_user + '&token=avid';
+    query_params = '?userId=' + assets_data.test_user //+ '&token=avid';
 
 
 frisby.create('GET /assets returns error')
@@ -168,5 +168,59 @@ frisby.create('PUT renames asset name returns success')
     .expectJSON(api_json.status_success)
 
     .expectJSON('data', {"name": renamed})
+
+    .toss();
+
+
+frisby.create('Load asset PUT /load')
+
+    .put(url + '/536b32909d370f763b3251b5/load', {
+        "_id": '536b74425c918306412337da',
+        "ownerId": assets_data.test_user
+    })
+    .expectStatus(500)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSON(api_json.status_error)
+
+    .toss();
+
+
+frisby.create('GET /assets/{assetId}/owner')
+//536b74425c918306412337da
+    .get(url + '/536b74425c918306412337da/owner')
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSON(api_json.status_success)
+
+    .expectJSONTypes('data', {
+        "_id": String,
+        "ownerId": String
+    })
+
+    .expectJSON('data', {
+        "_id": '536b74425c918306412337da',
+        "ownerId": assets_data.test_user
+    })
+
+    .toss();
+
+frisby.create('PUT /assets/{assetId}/owner')
+
+    //536b74425c918306412337da
+    .put(url + '/536b74425c918306412337da/owner', {"ownerId": assets_data.test_user})
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSON(api_json.status_success)
+
+    .toss();
+
+//536b72e55c918306412337c0
+
+frisby.create('GET /assets/{assetId}/permissions')
+    .get(url + '/536b72e55c918306412337c0/permissions')
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSON(api_json.status_success)
+
 
     .toss();
