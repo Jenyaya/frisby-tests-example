@@ -174,13 +174,13 @@ frisby.create('PUT renames asset name returns success')
 
 frisby.create('Load asset PUT /load')
 
-    .put(url + '/536b32909d370f763b3251b5/load', {
+    .put(url + '/536b74425c918306412337da/load', {
         "_id": '536b74425c918306412337da',
         "ownerId": assets_data.test_user
     })
-    .expectStatus(500)
+    .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_error)
+    .expectJSON(api_json.status_success)
 
     .toss();
 
