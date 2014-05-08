@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 var should = require('chai').should();
 
 var host = 'http://172.22.194.29', path = '/api/1.0', url = host + path,
-    query_params = '?userId=12345678'
+    query_params = '?userId=12345678&token=avid'
 
 
 var test_post = {
@@ -23,7 +23,7 @@ frisby.create('Test assets /assets')
     .expectStatus(500)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json.assets_response)
+    .expectJSON(api_json.assets_error_response)
 
     .toss();
 
@@ -51,11 +51,10 @@ frisby.create('Test asset /assets?userId=12345678')
 
 frisby.create('Test POST asset /assets')
 
-
     .post(url + '/assets', test_post)
-    .expectStatus(200)
+    .expectStatus(201)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.asset_created)
+    .expectJSON(api_json.status_success)
     .expectJSON('data', { "ownerId": test_post["ownerId"], "accountId": test_post["accountId"], "name": test_post["name"], "__v": 0, "metadata": null, "attributes": [], "status": "init", "type": "pxf", "size": 0, "location": null, "availableZones": [], "originZone": null, "versionParentId": null, "versionTop": true, "version": 0, "parentId": null})
 
 
