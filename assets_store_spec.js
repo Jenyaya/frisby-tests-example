@@ -33,8 +33,7 @@ frisby.create('Test asset data /assets?userId=12345678')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON('data', [{"_id": "536926ccf05e34cb1e939307", "ownerId": "12345678", "accountId": "1q2w3e4r", "name": "Test Asset", "__v": 0, "metadata": null, "attributes": [], "status": "init", "type": "pxf", "size": 0, "location": null, "availableZones": [], "originZone": null, "updatedAt": "2014-05-06T18:15:40.038Z", "createdAt": "2014-05-06T18:15:40.037Z", "versionParentId": null, "versionTop": true, "version": 0, "parentId": "98765432"}])
-
+    .expectJSON('data', [{"_id":"536a1bf18f98b25321253583","name":"My Asset","accountId":"1q2w3e4r","ownerId":"12345678","__v":0,"metadata":null,"attributes":[],"status":"init","type":"pxf","size":0,"location":null,"availableZones":[],"originZone":null,"updatedAt":"2014-05-07T11:41:37.155Z","createdAt":"2014-05-07T11:41:37.155Z","versionParentId":null,"versionTop":true,"version":0,"parentId":null}])
     .toss();
 
 frisby.create('Test asset /assets?userId=12345678')
