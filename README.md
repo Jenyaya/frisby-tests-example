@@ -2,11 +2,13 @@ FrisbyJS API test suite
 ==================================
 
 
-- For install:
+Installation
+--------------
 
  ```npm install```
 
 
-- Run tests:
+Running
+--------------
 
 ```npm install webdriverjs```
