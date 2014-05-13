@@ -16,7 +16,7 @@ frisby.create('GET /assets returns error')
     .expectStatus(500)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json_responses.assets_error_response)
+    .expectJSON(api_json_responses.error_response)
 
     .toss();
 
@@ -28,7 +28,7 @@ frisby.create('GET /assets?query_params returns assets')
     .expectHeaderContains('content-type', 'application/json')
 
     .expectJSON(api_json_responses.status_success)
-    .expectJSON(api_json_responses.assets_userid_response)
+    .expectJSON(api_json_responses.userid_response)
 
     .afterJSON(function (res) {
         expect(res.data.length).to.above(0);
@@ -171,18 +171,6 @@ frisby.create('PUT renames asset name returns success')
 
     .toss();
 
-
-frisby.create('Load asset PUT /load')
-
-    .put(url + '/536b74425c918306412337da/load', {
-        "_id": '536b74425c918306412337da',
-        "ownerId": assets_data.user
-    })
-    .expectStatus(200)
-    .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json_responses.status_success)
-
-    .toss();
 
 
 frisby.create('GET /assets/{assetId}/owner')

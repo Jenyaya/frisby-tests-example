@@ -23,7 +23,7 @@ frisby.create('Test assets /assets')
     .expectStatus(500)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json_responses.assets_error_response)
+    .expectJSON(api_json_responses.status_error)
 
     .toss();
 
