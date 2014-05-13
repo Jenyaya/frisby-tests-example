@@ -1,9 +1,9 @@
 var frisby = require('frisby');
 
-var api_json = require('./jsons/api_json');
+var api_json = require('./jsons/api_json_responses');
 
 
-console.log(api_json.response);
+console.log(api_json_responses.response);
 
 
 frisby.create('Test collaboration /api')
@@ -12,19 +12,19 @@ frisby.create('Test collaboration /api')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json.response)
+    .expectJSON(api_json_responses.response)
 
     .toss();
 
 
-console.log(api_json.response2());
+console.log(api_json_responses.response2());
 frisby.create('Test collaboration /api')
 
     .get('http://localhost:5000/api/')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json.response2())
+    .expectJSON(api_json_responses.response2())
 
     .toss();
 

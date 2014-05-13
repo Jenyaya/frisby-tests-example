@@ -1,5 +1,5 @@
 var frisby = require('frisby');
-var api_json = require('./jsons/api_json');
+var api_json = require('./../jsons/api_json_responses');
 
 var expect = require('chai').expect;
 var should = require('chai').should();
@@ -23,7 +23,7 @@ frisby.create('Test assets /assets')
     .expectStatus(500)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json.assets_error_response)
+    .expectJSON(api_json_responses.assets_error_response)
 
     .toss();
 
@@ -42,7 +42,7 @@ frisby.create('Test asset /assets?userId=12345678')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json.assets_userid_response)
+    .expectJSON(api_json_responses.assets_userid_response)
 
     .toss();
 
@@ -53,7 +53,7 @@ frisby.create('Test POST asset /assets')
     .post(url + '/assets', test_post)
     .expectStatus(201)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
     .expectJSON('data', { "ownerId": test_post["ownerId"], "accountId": test_post["accountId"], "name": test_post["name"], "__v": 0, "metadata": null, "attributes": [], "status": "init", "type": "pxf", "size": 0, "location": null, "availableZones": [], "originZone": null, "versionParentId": null, "versionTop": true, "version": 0, "parentId": null})
 
 

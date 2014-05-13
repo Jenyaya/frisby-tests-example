@@ -1,6 +1,6 @@
 var frisby = require('frisby');
-var api_json = require('./jsons/api_json');
-var assets_data = require('./jsons/assets');
+var api_json_responses = require('./../jsons/api_json_responses');
+var assets_data = require('./../jsons/api_json_requests');
 
 var expect = require('chai').expect;
 var should = require('chai').should();
@@ -16,7 +16,7 @@ frisby.create('GET /assets returns error')
     .expectStatus(500)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json.assets_error_response)
+    .expectJSON(api_json_responses.assets_error_response)
 
     .toss();
 
@@ -27,8 +27,8 @@ frisby.create('GET /assets?query_params returns assets')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
 
-    .expectJSON(api_json.status_success)
-    .expectJSON(api_json.assets_userid_response)
+    .expectJSON(api_json_responses.status_success)
+    .expectJSON(api_json_responses.assets_userid_response)
 
     .afterJSON(function (res) {
         expect(res.data.length).to.above(0);
@@ -44,7 +44,7 @@ frisby.create('POST new asset returns success')
 
     .expectStatus(201)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
 
     .expectJSON('data', { "ownerId": assets_data.test_asset["ownerId"], "accountId": assets_data.test_asset["accountId"], "name": assets_data.test_asset["name"], "parentId": null, "status": "init"})
@@ -59,7 +59,7 @@ frisby.create('POST new asset returns success')
 
             .expectStatus(200)
             .expectHeaderContains('content-type', 'application/json')
-            .expectJSON(api_json.status_success)
+            .expectJSON(api_json_responses.status_success)
 
 
             .expectJSON({"status": "success", "code": 200, "message": "Success operation", "data": 1})
@@ -79,7 +79,7 @@ frisby.create('DELETE asset returns success')
 
     .expectStatus(201)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
 
     .expectJSON('data', { "ownerId": assets_data.test_asset["ownerId"], "accountId": assets_data.test_asset["accountId"], "name": assets_data.test_asset["name"], "parentId": null, "status": "init"})
@@ -94,7 +94,7 @@ frisby.create('DELETE asset returns success')
 
             .expectStatus(200)
             .expectHeaderContains('content-type', 'application/json')
-            .expectJSON(api_json.status_success)
+            .expectJSON(api_json_responses.status_success)
 
 
             .expectJSON({"status": "success", "code": 200, "message": "Success operation", "data": 1})
@@ -112,7 +112,7 @@ frisby.create('GET asset returns success')
     .get(url + '/536a36769f4867c02d6fbfbd')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
     .expectJSON({"status": "success", "code": 200, "message": "Success operation",
         "data": {"_id": "536a36769f4867c02d6fbfbd", "name": "My Asset5rdljt", "accountId": "1q2w3e4r", "ownerId": "12345678", "__v": 0, "metadata": null,
@@ -129,7 +129,7 @@ frisby.create('PUT update asset returns success')
     .get(url + '/536a3b387a1857243181e0c5')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
     .expectJSON({"status": "success", "code": 200, "message": "Success operation", "data": {"_id": "536a3b387a1857243181e0c5", "name": "My Asset5vqawh", "accountId": "1q2w3e4r", "ownerId": "12345678", "__v": 0, "metadata": null, "attributes": [], "status": "init", "type": "pxf", "size": 0, "location": null, "availableZones": [], "originZone": null, "updatedAt": "2014-05-07T13:55:04.621Z", "createdAt": "2014-05-07T13:55:04.621Z", "versionParentId": null, "versionTop": true, "version": 0, "parentId": null}})
 
@@ -137,7 +137,7 @@ frisby.create('PUT update asset returns success')
     .put(url + '/536a3b387a1857243181e0c5', {"data": { "name": "My Asset5_renamed"}})
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
     /*.patch(url + '/536b32909d370f763b3251b5', {"data": {"_id": "536a36769f4867c02d6fbfbd", "name": "My Asset5_renamed"}})
      .expectStatus(200)
@@ -152,7 +152,7 @@ frisby.create('GET asset name returns success')
     .get(url + '/536b365a5c91830641233700/name')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
     .expectJSON('data', {"name": "My Asset8Mayspmwd"})
 
@@ -165,7 +165,7 @@ frisby.create('PUT renames asset name returns success')
     .put(url + '/536b32909d370f763b3251b5/name', {name: renamed})
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
     .expectJSON('data', {"name": renamed})
 
@@ -176,11 +176,11 @@ frisby.create('Load asset PUT /load')
 
     .put(url + '/536b74425c918306412337da/load', {
         "_id": '536b74425c918306412337da',
-        "ownerId": assets_data.test_user
+        "ownerId": assets_data.user
     })
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
     .toss();
 
@@ -190,7 +190,7 @@ frisby.create('GET /assets/{assetId}/owner')
     .get(url + '/536b74425c918306412337da/owner')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
     .expectJSONTypes('data', {
         "_id": String,
@@ -210,7 +210,7 @@ frisby.create('PUT /assets/{assetId}/owner')
     .put(url + '/536b74425c918306412337da/owner', {"ownerId": assets_data.test_user})
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
     .toss();
 
@@ -220,7 +220,7 @@ frisby.create('GET /assets/{assetId}/permissions')
     .get(url + '/536b72e55c918306412337c0/permissions')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
-    .expectJSON(api_json.status_success)
+    .expectJSON(api_json_responses.status_success)
 
 
     .toss();
